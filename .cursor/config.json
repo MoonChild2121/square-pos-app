@@ -1,0 +1,12 @@
+{
+  "instructions": [
+    "Use standard Next.js App Router folder structure.",
+    "Pages go in /app using route folders and page.tsx naming.",
+    "UI components go in /components using PascalCase filenames.",
+    "Helpers and API logic go in /lib using camelCase filenames.",
+    "Context providers go in /context.",
+    "Custom React hooks go in /hooks using useX naming.",
+    "Styles go in /styles — use Panda CSS only.",
+    "Use modular, single-purpose components. Avoid mixing UI and logic."
+  ]
+}

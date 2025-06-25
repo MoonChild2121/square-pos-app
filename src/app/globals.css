@@ -1,0 +1,11 @@
+@layer reset, base, tokens, recipes, utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html {
+  font-family: var(--fonts-body);
+}
+
+body {
+  background: var(--colors-bg-canvas);
+  color: var(--colors-text-primary);
+}

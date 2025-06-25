@@ -1,0 +1,41 @@
+{
+  "name": "square-pos-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prepare": "panda codegen",
+    "dev": "concurrently \"npm run panda:watch\" \"next dev --turbo\"",
+    "build": "panda && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
+    "panda": "panda",
+    "panda:watch": "panda --watch"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.10.0",
+    "@hookform/resolvers": "^5.1.1",
+    "next": "15.3.4",
+    "next-auth": "^4.24.11",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.58.1",
+    "squareup": "^1.0.0",
+    "zod": "^3.25.67",
+    "@pandacss/react": "^0.54.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@pandacss/dev": "^0.54.0",
+    "@types/node": "^20.19.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
+    "@typescript-eslint/parser": "^8.35.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.4",
+    "typescript": "^5"
+  }
+}
