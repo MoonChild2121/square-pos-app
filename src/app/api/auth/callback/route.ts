@@ -88,8 +88,22 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    console.log('Redirecting to /dashboard')
-    return NextResponse.redirect(new URL('/dashboard', req.url))
+    // Create response with redirect
+    const response = NextResponse.redirect(new URL('/dashboard', req.url))
+
+    // Set merchant ID cookie
+    response.cookies.set('merchant_id', data.merchant_id, {
+      httpOnly: false, // Allow client-side access
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      expires: data.expires_at
+        ? new Date(data.expires_at)
+        : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    })
+
+    console.log('Redirecting to /dashboard with merchant ID cookie set')
+    return response
   } catch (error) {
     console.error('Token exchange or saving failed:', error)
     return NextResponse.json(
