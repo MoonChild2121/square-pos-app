@@ -1,24 +1,36 @@
-// lib/tokenStore.ts
+import { supabase } from './supabase-admin'
+import { encrypt } from './crypto'
 
-import fs from 'fs'
-import path from 'path'
-
-const TOKEN_PATH = path.join(process.cwd(), 'tokenStore.json')
-
-type TokenInfo = {
+type TokenPayload = {
+  merchant_id: string
   access_token: string
   refresh_token: string
-  expires_at: string
-  merchant_id: string
+  expires_at: string // ISO format
 }
 
-export const saveToken = (token: TokenInfo) => {
-  fs.writeFileSync(TOKEN_PATH, JSON.stringify(token, null, 2), 'utf-8')
-  console.log('Token stored in tokenStore.json:', token)
-}
+export async function saveToken({
+  merchant_id,
+  access_token,
+  refresh_token,
+  expires_at,
+}: TokenPayload) {
+  const { error, data } = await supabase
+    .from('tokens')
+    .upsert(
+      {
+        merchant_id,
+        access_token: encrypt(access_token),
+        refresh_token: encrypt(refresh_token),
+        expires_at: new Date(expires_at).toISOString(),
+      },
+      { onConflict: 'merchant_id' }
+    )
+    .select()
 
-export const getToken = (): TokenInfo | null => {
-  if (!fs.existsSync(TOKEN_PATH)) return null
-  const data = fs.readFileSync(TOKEN_PATH, 'utf-8')
-  return JSON.parse(data) as TokenInfo
+  if (error) {
+    console.error('Error saving token to Supabase:', error)
+    throw error
+  }
+
+  return data?.[0]
 }

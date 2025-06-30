@@ -44,7 +44,7 @@ export default function LoginPage() {
     console.log('- State:', state)
 
     // Store the state for verification when the callback happens
-    sessionStorage.setItem('oauth_state', state)
+    document.cookie = `square_oauth_state=${state}; path=/; SameSite=Lax`
 
     // Redirect the current window to the OAuth login flow
     window.location.href = url
